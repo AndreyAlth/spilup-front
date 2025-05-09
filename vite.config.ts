@@ -18,6 +18,12 @@ export default defineConfig({
       'styles': path.resolve(__dirname, './src/styles'),
       'components': path.resolve(__dirname, './src/components'),
       'utils': path.resolve(__dirname, './src/utils'),
+      'configs': path.resolve(__dirname, './src/configs'),
+      'constants': path.resolve(__dirname, './src/constants'),
+      'app': path.resolve(__dirname, './src/app'),
+      'hooks': path.resolve(__dirname, './src/hooks'),
+      'middleware': path.resolve(__dirname, './src/middleware'),
+      'assets': path.resolve(__dirname, './src/assets'),
     }
   }
 })
