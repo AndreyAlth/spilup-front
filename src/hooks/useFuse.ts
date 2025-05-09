@@ -1,7 +1,7 @@
 import Fuse from 'fuse.js';
 import { useMemo, useState, useDeferredValue } from 'react';
 
-export function useFuse(list, options) {
+export function useFuse(list: any[], options: any) {
     // defining our query state in there directly
     const [query, setQuery] = useState('');
     const defferedQuery = useDeferredValue(query)
@@ -21,7 +21,7 @@ export function useFuse(list, options) {
         // if query is empty and `matchAllOnEmptyQuery` is `true` then return all list
         // NOTE: we remap the results to match the return structure of `fuse.search()`
         () => !defferedQuery && matchAllOnEmptyQuery
-            ? fuse.getIndex().docs.slice(0, limit).map((item, refIndex) => ({ item, refIndex }))
+            ? (fuse.getIndex() as any).docs.slice(0, limit).map((item: any, refIndex: number) => ({ item, refIndex }))
             : fuse.search(defferedQuery.toString().trim(), { limit }),
         [fuse, limit, matchAllOnEmptyQuery, defferedQuery]
     );
