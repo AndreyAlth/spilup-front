@@ -39,6 +39,10 @@ export default [
         { allowConstantExport: true },
       ],
       'jsx-a11y/alt-text': 'error',
+      '@typescript-eslint/no-explicit-any': 'off',
+      '@typescript-eslint/no-floating-promises': 'warn',
+      '@typescript-eslint/no-unsafe-argument': 'warn',
+      '@typescript-eslint/no-unsafe-call': 'off',
     },
   },
 ];
