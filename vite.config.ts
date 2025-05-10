@@ -25,5 +25,8 @@ export default defineConfig({
       'middleware': path.resolve(__dirname, './src/middleware'),
       'assets': path.resolve(__dirname, './src/assets'),
     }
+  },
+  preview: {
+    allowedHosts: [],
   }
 })
