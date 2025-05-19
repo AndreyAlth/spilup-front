@@ -20,202 +20,204 @@ import {
 // Local Imports
 import { InvoiceTable } from "../components/InvoiceTable";
 import { Badge, Button, Circlebar, Input } from "components/ui";
-import { useDisclosure } from "hooks";
+// import { useDisclosure } from "hooks";
 import { ContextualHelp } from "components/shared/ContextualHelp";
+import { useGetMyBalance, useGetTransactionHistory } from "api/tokens";
+import { Skeleton } from "components/ui";
 
 // ----------------------------------------------------------------------
 
 export default function Billing() {
+  const { data: balance, isLoading: isBalanceLoading } = useGetMyBalance();
+  const { data: transactions, isLoading: isTransactionsLoading } =
+    useGetTransactionHistory();
+
   return (
     <div className="w-full 2xl:max-w-5xl">
-      <h5 className="text-lg font-medium text-gray-800 dark:text-dark-50">
+      <h5 className="dark:text-dark-50 text-lg font-medium text-gray-800">
         Billing, Payments & Tokens
       </h5>
-      <p className="mt-0.5 text-balance text-sm text-gray-500 dark:text-dark-200">
-        Manage Your Billing and Payments from here. You can also manage your
-        payment methods from here.
+      <p className="dark:text-dark-200 mt-0.5 text-sm text-balance text-gray-500">
+        Manage Your Billing, Payments & Tokens from here. You can also manage
+        your payment methods from here.
       </p>
 
-      <MemberPlan />
+      <MemberPlan amount={balance?.amount || 0} isBalanceLoading={isBalanceLoading} />
 
-      <PaymentMethods />
+      {/* <PaymentMethods /> */}
 
-      <div className="my-7 h-px bg-gray-200 dark:bg-dark-500"></div>
+      <div className="dark:bg-dark-500 my-7 h-px bg-gray-200"></div>
 
-      <InvoiceSection />
+      <TransactionSection />
     </div>
   );
 }
 
-function MemberPlan() {
+function MemberPlan({ amount, isBalanceLoading }: { amount: number; isBalanceLoading: boolean }) {
   return (
-    <div className="mt-5 rounded-lg bg-gray-100 p-4 dark:bg-dark-800">
+    <div className="dark:bg-dark-800 mt-5 rounded-lg bg-gray-100 p-4">
       <div className="flex flex-col items-start justify-between sm:flex-row">
         <div>
-          <p className="text-lg font-medium text-gray-800 dark:text-dark-100">
-            Premium Plan
+          <p className="dark:text-dark-100 text-lg font-medium text-gray-800">
+            Tokens
           </p>
           <div className="mt-2 flex items-center gap-2">
-            <Circlebar
-              size={5}
-              strokeWidth={12}
-              variant="soft"
-              value={60}
-              color="primary"
-              className="flex"
-            />
-            <p>136 / 300 Days left</p>
+            {isBalanceLoading ? (
+              <Skeleton className="size-16 rounded-lg" />
+            ) : (
+              <p>{`${amount} tokens left`}</p>
+            )}
           </div>
         </div>
         <Button className="mt-6 sm:mt-0" color="primary">
-          Upgrade
+          Buy
         </Button>
       </div>
     </div>
   );
 }
 
-function PaymentMethods() {
-  const [isOpen, { open, close }] = useDisclosure(false);
+// function PaymentMethods() {
+//   const [isOpen, { open, close }] = useDisclosure(false);
 
-  return (
-    <>
-      <div className="mt-4">
-        <div className="flex justify-between">
-          <div>
-            <p className="text-base font-medium text-gray-800 dark:text-dark-100">
-              Payment Methods
-            </p>
-            <p className="mt-0.5 text-balance">
-              Manage your payment methods from here.
-            </p>
-          </div>
-          <Button
-            onClick={open}
-            className="h-8 space-x-2 whitespace-nowrap px-2.5 text-xs "
-          >
-            <PlusIcon className="size-4" />
-            <span>New Method</span>
-          </Button>
-        </div>
-      </div>
+//   return (
+//     <>
+//       <div className="mt-4">
+//         <div className="flex justify-between">
+//           <div>
+//             <p className="text-base font-medium text-gray-800 dark:text-dark-100">
+//               Payment Methods
+//             </p>
+//             <p className="mt-0.5 text-balance">
+//               Manage your payment methods from here.
+//             </p>
+//           </div>
+//           <Button
+//             onClick={open}
+//             className="h-8 space-x-2 whitespace-nowrap px-2.5 text-xs "
+//           >
+//             <PlusIcon className="size-4" />
+//             <span>New Method</span>
+//           </Button>
+//         </div>
+//       </div>
 
-      <div className="hide-scrollbar -mx-4 mt-4 flex items-start gap-3 overflow-x-auto px-4 sm:-mx-5 sm:px-5">
-        <div className="w-72 shrink-0 rounded-lg bg-linear-to-br from-amber-400 to-orange-600 p-[3px]">
-          <div className="rounded-lg bg-white p-4 pb-3 dark:bg-dark-700">
-            <div className="flex items-start justify-between">
-              <div>
-                <img
-                  src="/images/payments/cc-visa.svg"
-                  className="h-5"
-                  alt="logo"
-                />
-                <div className="mt-2">
-                  <p className="font-medium text-gray-800 dark:text-dark-100">
-                    Travis Fuller
-                  </p>
-                  <p className="mt-0.5 text-xs">•••• 6988</p>
-                </div>
-              </div>
-              <Badge
-                className="h-5 rounded-full text-tiny-plus uppercase"
-                color="primary"
-              >
-                Primary
-              </Badge>
-            </div>
+//       <div className="hide-scrollbar -mx-4 mt-4 flex items-start gap-3 overflow-x-auto px-4 sm:-mx-5 sm:px-5">
+//         <div className="w-72 shrink-0 rounded-lg bg-linear-to-br from-amber-400 to-orange-600 p-[3px]">
+//           <div className="rounded-lg bg-white p-4 pb-3 dark:bg-dark-700">
+//             <div className="flex items-start justify-between">
+//               <div>
+//                 <img
+//                   src="/images/payments/cc-visa.svg"
+//                   className="h-5"
+//                   alt="logo"
+//                 />
+//                 <div className="mt-2">
+//                   <p className="font-medium text-gray-800 dark:text-dark-100">
+//                     Travis Fuller
+//                   </p>
+//                   <p className="mt-0.5 text-xs">•••• 6988</p>
+//                 </div>
+//               </div>
+//               <Badge
+//                 className="h-5 rounded-full text-tiny-plus uppercase"
+//                 color="primary"
+//               >
+//                 Primary
+//               </Badge>
+//             </div>
 
-            <div className="mt-4 flex items-end justify-between">
-              <p className="text-xs">Expired 02.06.2024</p>
+//             <div className="mt-4 flex items-end justify-between">
+//               <p className="text-xs">Expired 02.06.2024</p>
 
-              <Button
-                className="-mb-1 -mr-1 size-6 rounded-full"
-                variant="flat"
-                isIcon
-              >
-                <Cog6ToothIcon className="size-5" />
-              </Button>
-            </div>
-          </div>
-        </div>
-        <div className="w-72 shrink-0 rounded-lg bg-linear-to-br from-info to-info-darker p-[3px]">
-          <div className="rounded-lg bg-white p-4 pb-3 dark:bg-dark-700">
-            <div className="flex items-start justify-between">
-              <div>
-                <img
-                  src="/images/payments/cc-mastercard.svg"
-                  className="h-5"
-                  alt="logo"
-                />
-                <div className="mt-2">
-                  <p className="font-medium text-gray-800 dark:text-dark-100">
-                    Samantha Shelton
-                  </p>
-                  <p className="mt-0.5 text-xs">•••• 6988</p>
-                </div>
-              </div>
-            </div>
+//               <Button
+//                 className="-mb-1 -mr-1 size-6 rounded-full"
+//                 variant="flat"
+//                 isIcon
+//               >
+//                 <Cog6ToothIcon className="size-5" />
+//               </Button>
+//             </div>
+//           </div>
+//         </div>
+//         <div className="w-72 shrink-0 rounded-lg bg-linear-to-br from-info to-info-darker p-[3px]">
+//           <div className="rounded-lg bg-white p-4 pb-3 dark:bg-dark-700">
+//             <div className="flex items-start justify-between">
+//               <div>
+//                 <img
+//                   src="/images/payments/cc-mastercard.svg"
+//                   className="h-5"
+//                   alt="logo"
+//                 />
+//                 <div className="mt-2">
+//                   <p className="font-medium text-gray-800 dark:text-dark-100">
+//                     Samantha Shelton
+//                   </p>
+//                   <p className="mt-0.5 text-xs">•••• 6988</p>
+//                 </div>
+//               </div>
+//             </div>
 
-            <div className="mt-4 flex items-end justify-between">
-              <p className="text-xs">Expired 02.06.2024</p>
+//             <div className="mt-4 flex items-end justify-between">
+//               <p className="text-xs">Expired 02.06.2024</p>
 
-              <Button
-                className="-mb-1 -mr-1 size-6 rounded-full"
-                variant="flat"
-                isIcon
-              >
-                <Cog6ToothIcon className="size-5" />
-              </Button>
-            </div>
-          </div>
-        </div>
-        <div className="w-72 shrink-0 rounded-lg bg-linear-to-br from-purple-500 to-indigo-600 p-[3px]">
-          <div className="rounded-lg bg-white p-4 pb-3 dark:bg-dark-700">
-            <div className="flex items-start justify-between">
-              <div>
-                <img
-                  src="/images/payments/paypal.svg"
-                  className="h-5"
-                  alt="logo"
-                />
-                <div className="mt-2">
-                  <p className="font-medium text-gray-800 dark:text-dark-100">
-                    John Doe
-                  </p>
-                  <p className="mt-0.5 text-xs">John@gmail.com</p>
-                </div>
-              </div>
-            </div>
+//               <Button
+//                 className="-mb-1 -mr-1 size-6 rounded-full"
+//                 variant="flat"
+//                 isIcon
+//               >
+//                 <Cog6ToothIcon className="size-5" />
+//               </Button>
+//             </div>
+//           </div>
+//         </div>
+//         <div className="w-72 shrink-0 rounded-lg bg-linear-to-br from-purple-500 to-indigo-600 p-[3px]">
+//           <div className="rounded-lg bg-white p-4 pb-3 dark:bg-dark-700">
+//             <div className="flex items-start justify-between">
+//               <div>
+//                 <img
+//                   src="/images/payments/paypal.svg"
+//                   className="h-5"
+//                   alt="logo"
+//                 />
+//                 <div className="mt-2">
+//                   <p className="font-medium text-gray-800 dark:text-dark-100">
+//                     John Doe
+//                   </p>
+//                   <p className="mt-0.5 text-xs">John@gmail.com</p>
+//                 </div>
+//               </div>
+//             </div>
 
-            <div className="mt-4 flex items-end justify-between">
-              <p className="text-xs">Expired 02.06.2024</p>
+//             <div className="mt-4 flex items-end justify-between">
+//               <p className="text-xs">Expired 02.06.2024</p>
 
-              <Button
-                className="-mb-1 -mr-1 size-6 rounded-full"
-                variant="flat"
-                isIcon
-              >
-                <Cog6ToothIcon className="size-5" />
-              </Button>
-            </div>
-          </div>
-        </div>
-      </div>
+//               <Button
+//                 className="-mb-1 -mr-1 size-6 rounded-full"
+//                 variant="flat"
+//                 isIcon
+//               >
+//                 <Cog6ToothIcon className="size-5" />
+//               </Button>
+//             </div>
+//           </div>
+//         </div>
+//       </div>
 
-      <AddPaymentModal isOpen={isOpen} onClose={close} />
-    </>
-  );
-}
+//       <AddPaymentModal isOpen={isOpen} onClose={close} />
+//     </>
+//   );
+// }
 
-function InvoiceSection() {
+function TransactionSection() {
   return (
     <>
       <div>
-        <p className="text-base font-medium text-gray-800 dark:text-dark-100">
-          Invoices
+        <p className="dark:text-dark-100 text-base font-medium text-gray-800">
+          Transactions
         </p>
         <p className="mt-0.5 text-balance">
-          List of invoices. You can view and download them from here.
+          List of transactions. You can view and download them from here.
         </p>
       </div>
       <InvoiceTable />
@@ -253,12 +255,12 @@ function AddPaymentModal({ isOpen, onClose }) {
           leave="ease-in duration-200"
           leaveFrom="opacity-100 scale-100"
           leaveTo="opacity-0 scale-95"
-          className="relative flex w-full max-w-lg origin-bottom flex-col overflow-hidden rounded-lg bg-white transition-all duration-300 dark:bg-dark-700"
+          className="dark:bg-dark-700 relative flex w-full max-w-lg origin-bottom flex-col overflow-hidden rounded-lg bg-white transition-all duration-300"
         >
-          <div className="flex items-center justify-between rounded-t-lg bg-gray-200 px-4 py-3 dark:bg-dark-800 sm:px-5">
+          <div className="dark:bg-dark-800 flex items-center justify-between rounded-t-lg bg-gray-200 px-4 py-3 sm:px-5">
             <DialogTitle
               as="h3"
-              className="text-base font-medium text-gray-800 dark:text-dark-100"
+              className="dark:text-dark-100 text-base font-medium text-gray-800"
             >
               Add Card
             </DialogTitle>
