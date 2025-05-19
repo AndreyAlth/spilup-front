@@ -27,17 +27,19 @@ const isTokenValid = (authToken) => {
 /**
  * Sets or removes the authentication token in local storage and axios headers.
  *
- * @param {string} [authToken] - The JWT token to set. If `undefined` or `null`, the session will be cleared.
+ * @param {string} [token] - The JWT token to set. If `undefined` or `null`, the session will be cleared.
  */
-const setSession = (authToken) => {
-  if (typeof authToken === "string" && authToken.trim() !== "") {
+const setSession = (token: string) => {
+  if (typeof token === "string" && token.trim() !== "") {
     // Store token in local storage and set authorization header for axios
-    localStorage.setItem("authToken", authToken);
-    axios.defaults.headers.common.Authorization = `Bearer ${authToken}`;
+    localStorage.setItem("token", token);
+    axios.defaults.headers.common.Authorization = `Bearer ${token}`;
+    axios.defaults.headers.common["access_token"] = token;
   } else {
     // Remove token from local storage and delete authorization header from axios
-    localStorage.removeItem("authToken");
+    localStorage.removeItem("token");
     delete axios.defaults.headers.common.Authorization;
+    delete axios.defaults.headers.common["access_token"];
   }
 };
 

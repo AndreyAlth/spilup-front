@@ -78,12 +78,12 @@ export function AuthProvider({ children }) {
   useEffect(() => {
     const init = async () => {
       try {
-        const authToken = window.localStorage.getItem("authToken");
+        const token = window.localStorage.getItem("token");
 
-        if (authToken && isTokenValid(authToken)) {
-          setSession(authToken);
+        if (token && isTokenValid(token)) {
+          setSession(token);
 
-          const response = await axios.get("/user/profile");
+          const response = await axios.get("/users/profile");
           const { user } = response.data;
 
           dispatch({
@@ -128,13 +128,13 @@ export function AuthProvider({ children }) {
         password,
       });
 
-      const { authToken, user } = response.data;
+      const { token, user } = response.data;
 
-      if (!isString(authToken) && !isObject(user)) {
+      if (!isString(token) && !isObject(user)) {
         throw new Error("Response is not vallid");
       }
 
-      setSession(authToken);
+      setSession(token);
 
       dispatch({
         type: "LOGIN_SUCCESS",
@@ -143,6 +143,7 @@ export function AuthProvider({ children }) {
         },
       });
     } catch (err) {
+      console.log(err)
       dispatch({
         type: "LOGIN_ERROR",
         payload: {
