@@ -1,6 +1,6 @@
 // Import Dependencies
 import { UserIcon } from "@heroicons/react/24/outline";
-import { TbPalette } from "react-icons/tb";
+import { TbCoins, TbPalette } from "react-icons/tb";
 
 // Local Imports
 import SettingIcon from "assets/dualicons/setting.svg?react";
@@ -31,6 +31,14 @@ export const settings = {
             title: 'Appearance',
             transKey: 'nav.settings.appearance',
             Icon: TbPalette,
+        },
+        {
+            id: 'billing',
+            type: NAV_TYPE_ITEM,
+            path: '/settings/billing',
+            title: 'Billing',
+            transKey: 'nav.settings.billing',
+            Icon: TbCoins,
         },
     ]
 }
