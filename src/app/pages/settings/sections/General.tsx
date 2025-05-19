@@ -84,8 +84,8 @@ export default function General() {
           prefix={<PhoneIcon className="size-4.5" />}
         />
       </div>
-      <div className="my-7 h-px bg-gray-200 dark:bg-dark-500" />
-      <div>
+      {/* <div className="my-7 h-px bg-gray-200 dark:bg-dark-500" /> */}
+      {/* <div>
         <div>
           <p className="text-base font-medium text-gray-800 dark:text-dark-100">
             Linked Accounts
@@ -169,7 +169,7 @@ export default function General() {
             </Button>
           </div>
         </div>
-      </div>
+      </div> */}
       <div className="mt-8 flex justify-end space-x-3 ">
         <Button className="min-w-[7rem]">Cancel</Button>
         <Button className="min-w-[7rem]" color="primary">
