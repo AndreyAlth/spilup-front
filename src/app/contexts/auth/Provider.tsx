@@ -117,14 +117,14 @@ export function AuthProvider({ children }) {
     init();
   }, []);
 
-  const login = async ({ username, password }) => {
+  const login = async ({ email, password }: { email: string, password: string}) => {
     dispatch({
       type: "LOGIN_REQUEST",
     });
 
     try {
-      const response = await axios.post("/login", {
-        username,
+      const response = await axios.post("/auth/login", {
+        email,
         password,
       });
 
@@ -151,6 +151,7 @@ export function AuthProvider({ children }) {
       });
     }
   };
+
 
   const logout = async () => {
     setSession(null);
