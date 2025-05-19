@@ -78,11 +78,6 @@ export const columns = [
     header: "Description",
     cell: ({ getValue }) => getValue() || "No Description",
   }),
-  columnHelper.accessor((row) => row.metadata, {
-    id: "metadata",
-    header: "Metadata",
-    cell: ({ getValue }) => JSON.stringify(getValue() || {}),
-  }),
   columnHelper.display({
     id: "download",
     header: "Download",
