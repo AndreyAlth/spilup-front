@@ -32,6 +32,14 @@ export default function Billing() {
   const { data: transactions, isLoading: isTransactionsLoading } =
     useGetTransactionHistory();
 
+  if (!balance || !transactions) {
+    return (
+      <div className="flex h-full w-full items-center justify-center">
+        Error
+      </div>
+    );
+  }
+
   return (
     <div className="w-full 2xl:max-w-5xl">
       <h5 className="dark:text-dark-50 text-lg font-medium text-gray-800">
@@ -42,18 +50,30 @@ export default function Billing() {
         your payment methods from here.
       </p>
 
-      <MemberPlan amount={balance?.amount || 0} isBalanceLoading={isBalanceLoading} />
+      <MemberPlan
+        amount={balance?.amount || 0}
+        isBalanceLoading={isBalanceLoading}
+      />
 
       {/* <PaymentMethods /> */}
 
       <div className="dark:bg-dark-500 my-7 h-px bg-gray-200"></div>
 
-      <TransactionSection />
+      <TransactionSection
+        list={transactions}
+        isLoading={isTransactionsLoading}
+      />
     </div>
   );
 }
 
-function MemberPlan({ amount, isBalanceLoading }: { amount: number; isBalanceLoading: boolean }) {
+function MemberPlan({
+  amount,
+  isBalanceLoading,
+}: {
+  amount: number;
+  isBalanceLoading: boolean;
+}) {
   return (
     <div className="dark:bg-dark-800 mt-5 rounded-lg bg-gray-100 p-4">
       <div className="flex flex-col items-start justify-between sm:flex-row">
@@ -209,7 +229,13 @@ function MemberPlan({ amount, isBalanceLoading }: { amount: number; isBalanceLoa
 //   );
 // }
 
-function TransactionSection() {
+function TransactionSection({
+  list,
+  isLoading,
+}: {
+  list: TokenTransaction[];
+  isLoading: boolean;
+}) {
   return (
     <>
       <div>
@@ -220,7 +246,7 @@ function TransactionSection() {
           List of transactions. You can view and download them from here.
         </p>
       </div>
-      <InvoiceTable />
+      <InvoiceTable list={list} isLoading={isLoading} />
     </>
   );
 }

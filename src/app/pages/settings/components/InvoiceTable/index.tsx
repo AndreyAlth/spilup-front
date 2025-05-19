@@ -33,7 +33,7 @@ import { Toolbar } from "./Toolbar";
 
 // ----------------------------------------------------------------------
 
-export function InvoiceTable() {
+export function InvoiceTable({list, isLoading }: {list: TokenTransaction[], isLoading: boolean}) {
   const [invoices] = useState([...invoiceList]);
   const { isXl, is2xl } = useBreakpointsContext();
 
@@ -41,7 +41,7 @@ export function InvoiceTable() {
   const [sorting, setSorting] = useState([]);
 
   const table = useReactTable({
-    data: invoices,
+    data: list,
     columns,
     initialState: {
       pagination: {

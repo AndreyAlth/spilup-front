@@ -11,9 +11,9 @@ import { ensureString } from "utils/ensureString";
 // ----------------------------------------------------------------------
 
 const statusColor = {
-  pending: "neutral",
-  paid: "success",
-  unfunded: "error",
+  // pending: "neutral",
+  GENERATED: "success",
+  BURNED: "error",
 };
 
 const formatter = new Intl.NumberFormat("en-US", {
@@ -44,7 +44,7 @@ export function Amount({ getValue }) {
 export function Status({ getValue }) {
   const val = getValue();
   return (
-    <Badge color={statusColor[val.toLowerCase()]} className="capitalize">
+    <Badge color={statusColor[val]} className="capitalize">
       {val}
     </Badge>
   );
