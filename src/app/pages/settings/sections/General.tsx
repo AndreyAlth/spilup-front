@@ -6,7 +6,7 @@ import { HiPencil } from "react-icons/hi";
 
 // Local Imports
 import { PreviewImg } from "components/shared/PreviewImg";
-import { Avatar, Button, Input, Upload } from "components/ui";
+import { Avatar, Button, Input, Upload, Spinner } from "components/ui";
 import { useAuthContext } from "app/contexts/auth/context";
 import { useForm } from "react-hook-form";
 import { yupResolver } from "@hookform/resolvers/yup";
@@ -199,7 +199,7 @@ export default function General() {
       <div className="mt-8 flex justify-end space-x-3">
         {/* <Button className="min-w-[7rem]">Cancel</Button> */}
         <Button className="min-w-[7rem]" color="primary" type="submit" isLoading={isPending}>
-          { isPending ? "Saving..." : "Save"}
+          { isPending ? <Spinner/> : "Save"}
         </Button>
       </div>
     </form>
