@@ -7,7 +7,7 @@ import { createContext, useContext } from "react";
  * @param {string} errorMessage - Error message to display when the context is used outside of its provider.
  * @returns {[React.FC<{ value: T, children: React.ReactNode }>, () => T]} - A tuple containing the Provider component and the safe context hook.
  */
-export function createSafeContext(errorMessage) {
+export function createSafeContext<T>(errorMessage: string) {
   const Context = createContext(null);
 
   /**
@@ -27,13 +27,8 @@ export function createSafeContext(errorMessage) {
 
   /**
    * Context Provider component.
-   *
-   * @param {object} props
-   * @param {T} props.value - The value to provide to the context.
-   * @param {React.ReactNode} props.children - Child components.
-   * @returns {JSX.Element} - The context provider element.
    */
-  const Provider = ({ children, value }) => (
+  const Provider: React.FC<{ value: any; children: React.ReactNode }> = ({ children, value }) => (
     <Context.Provider value={value}>{children}</Context.Provider>
   );
 
