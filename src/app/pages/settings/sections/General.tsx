@@ -1,29 +1,51 @@
 // Import Dependencies
 import { PhoneIcon, XMarkIcon } from "@heroicons/react/20/solid";
 import { EnvelopeIcon, UserIcon } from "@heroicons/react/24/outline";
-import { useState } from "react";
+import { use, useState } from "react";
 import { HiPencil } from "react-icons/hi";
 
 // Local Imports
 import { PreviewImg } from "components/shared/PreviewImg";
-import { Avatar, Button, Input, Upload } from "components/ui";
-
+import { Avatar, Button, Input, Upload, Spinner } from "components/ui";
+import { useAuthContext } from "app/contexts/auth/context";
+import { useForm } from "react-hook-form";
+import { yupResolver } from "@hookform/resolvers/yup";
+import { updateUserSchema } from "./schema";
+import { useUpdateUser } from 'api/user/index'
 // ----------------------------------------------------------------------
 
 export default function General() {
+  const { user } = useAuthContext();
   const [avatar, setAvatar] = useState(null);
+  const { mutate, isPending } = useUpdateUser(user.id);
+
+  const {
+    register,
+    handleSubmit,
+    formState: { errors },
+  } = useForm({
+    resolver: yupResolver(updateUserSchema),
+    defaultValues: {
+      name: user.name,
+      last_name: user.last_name,
+    },
+  });
+
+  const onSubmit = (data) => {
+    mutate(data)
+  };
 
   return (
-    <div className="w-full max-w-3xl 2xl:max-w-5xl">
-      <h5 className="text-lg font-medium text-gray-800 dark:text-dark-50">
+    <form className="w-full max-w-3xl 2xl:max-w-5xl" onSubmit={handleSubmit(onSubmit)}>
+      <h5 className="dark:text-dark-50 text-lg font-medium text-gray-800">
         General
       </h5>
-      <p className="mt-0.5 text-balance text-sm text-gray-500 dark:text-dark-200">
+      <p className="dark:text-dark-200 mt-0.5 text-sm text-balance text-gray-500">
         Update your account settings.
       </p>
-      <div className="my-5 h-px bg-gray-200 dark:bg-dark-500" />
+      <div className="dark:bg-dark-500 my-5 h-px bg-gray-200" />
       <div className="mt-4 flex flex-col space-y-1.5">
-        <span className="text-base font-medium text-gray-800 dark:text-dark-100">
+        <span className="dark:text-dark-100 text-base font-medium text-gray-800">
           Avatar
         </span>
         <Avatar
@@ -32,11 +54,11 @@ export default function General() {
           imgProps={{ file: avatar }}
           src="/images/100x100.png"
           classNames={{
-            root: "rounded-xl ring-primary-600 ring-offset-[3px] ring-offset-white transition-all hover:ring-3 dark:ring-primary-500 dark:ring-offset-dark-700",
+            root: "ring-primary-600 dark:ring-primary-500 dark:ring-offset-dark-700 rounded-xl ring-offset-[3px] ring-offset-white transition-all hover:ring-3",
             display: "rounded-xl",
           }}
           indicator={
-            <div className="absolute bottom-0 right-0 -m-1 flex items-center justify-center rounded-full bg-white dark:bg-dark-700">
+            <div className="dark:bg-dark-700 absolute right-0 bottom-0 -m-1 flex items-center justify-center rounded-full bg-white">
               {avatar ? (
                 <Button
                   onClick={() => setAvatar(null)}
@@ -58,20 +80,24 @@ export default function General() {
           }
         />
       </div>
-      <div className="mt-5 grid grid-cols-1 gap-4 sm:grid-cols-2 [&_.prefix]:pointer-events-none">
+      <div
+        className="mt-5 grid grid-cols-1 gap-4 sm:grid-cols-2 [&_.prefix]:pointer-events-none"
+      >
         <Input
-          placeholder="Enter Nickname"
+          placeholder={user.name}
           label="Display name"
           className="rounded-xl"
           prefix={<UserIcon className="size-4.5" />}
+          {...register("name")}
         />
         <Input
-          placeholder="Enter FullName"
-          label="Full name"
+          placeholder={user.last_name}
+          label="Last name"
           className="rounded-xl"
           prefix={<UserIcon className="size-4.5" />}
+          {...register("last_name")}
         />
-        <Input
+        {/* <Input
           placeholder="Enter Email"
           label="Email"
           className="rounded-xl"
@@ -82,10 +108,10 @@ export default function General() {
           label="Phone Number"
           className="rounded-xl"
           prefix={<PhoneIcon className="size-4.5" />}
-        />
+        /> */}
       </div>
-      <div className="my-7 h-px bg-gray-200 dark:bg-dark-500" />
-      <div>
+      {/* <div className="my-7 h-px bg-gray-200 dark:bg-dark-500" /> */}
+      {/* <div>
         <div>
           <p className="text-base font-medium text-gray-800 dark:text-dark-100">
             Linked Accounts
@@ -169,13 +195,13 @@ export default function General() {
             </Button>
           </div>
         </div>
-      </div>
-      <div className="mt-8 flex justify-end space-x-3 ">
-        <Button className="min-w-[7rem]">Cancel</Button>
-        <Button className="min-w-[7rem]" color="primary">
-          Save
+      </div> */}
+      <div className="mt-8 flex justify-end space-x-3">
+        {/* <Button className="min-w-[7rem]">Cancel</Button> */}
+        <Button className="min-w-[7rem]" color="primary" type="submit" isLoading={isPending}>
+          { isPending ? <Spinner/> : "Save"}
         </Button>
       </div>
-    </div>
+    </form>
   );
 }

@@ -22,14 +22,14 @@ export default function SignIn() {
   } = useForm({
     resolver: yupResolver(schema),
     defaultValues: {
-      username: "username",
+      email: "email",
       password: "password",
     },
   });
 
   const onSubmit = (data) => {
     login({
-      username: data.username,
+      email: data.email,
       password: data.password,
     });
   };
@@ -53,16 +53,16 @@ export default function SignIn() {
             <form onSubmit={handleSubmit(onSubmit)} autoComplete="off">
               <div className="space-y-4">
                 <Input
-                  label="Username"
-                  placeholder="Enter Username"
+                  label="Email"
+                  placeholder="Enter Email"
                   prefix={
                     <EnvelopeIcon
                       className="size-5 transition-colors duration-200"
                       strokeWidth="1"
                     />
                   }
-                  {...register("username")}
-                  error={errors?.username?.message}
+                  {...register("email")}
+                  error={errors?.email?.message}
                 />
                 <Input
                   label="Password"
@@ -87,7 +87,7 @@ export default function SignIn() {
                 </InputErrorMsg>
               </div>
 
-              <div className="mt-4 flex items-center justify-between space-x-2">
+              {/* <div className="mt-4 flex items-center justify-between space-x-2">
                 <Checkbox label="Remember me" />
                 <a
                   href="##"
@@ -95,7 +95,7 @@ export default function SignIn() {
                 >
                   Forgot Password?
                 </a>
-              </div>
+              </div> */}
 
               <Button type="submit" className="mt-5 w-full" color="primary">
                 Sign In
@@ -112,7 +112,7 @@ export default function SignIn() {
                 </Link>
               </p>
             </div>
-            <div className="my-7 flex items-center space-x-3 text-xs ">
+            {/* <div className="my-7 flex items-center space-x-3 text-xs ">
               <div className="h-px flex-1 bg-gray-200 dark:bg-dark-500"></div>
               <p>OR</p>
               <div className="h-px flex-1 bg-gray-200 dark:bg-dark-500"></div>
@@ -134,7 +134,7 @@ export default function SignIn() {
                 />
                 <span>Github</span>
               </Button>
-            </div>
+            </div> */}
           </Card>
           <div className="mt-8 flex justify-center text-xs text-gray-400 dark:text-dark-300">
             <a href="##">Privacy Notice</a>

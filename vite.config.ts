@@ -24,6 +24,7 @@ export default defineConfig({
       'hooks': path.resolve(__dirname, './src/hooks'),
       'middleware': path.resolve(__dirname, './src/middleware'),
       'assets': path.resolve(__dirname, './src/assets'),
+      'api': path.resolve(__dirname, './src/api'),
     }
   },
   preview: {

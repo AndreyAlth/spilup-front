@@ -7,23 +7,26 @@ import { BreakpointProvider } from "./app/contexts/breakpoint/Provider";
 import { LocaleProvider } from "./app/contexts/locale/Provider";
 import { SidebarProvider } from "./app/contexts/sidebar/Provider";
 import { ThemeProvider } from "./app/contexts/theme/Provider";
+import { QueryProvider } from "./app/contexts/api/QueryProvider";
 import router from "./app/router/router";
 
 // ----------------------------------------------------------------------
 
 function App() {
   return (
-    <AuthProvider>
-      <ThemeProvider>
-        <LocaleProvider>
-          <BreakpointProvider>
-            <SidebarProvider>
-              <RouterProvider router={router} />
-            </SidebarProvider>
-          </BreakpointProvider>
-        </LocaleProvider>
-      </ThemeProvider>
-    </AuthProvider>
+    <QueryProvider>
+      <AuthProvider>
+        <ThemeProvider>
+          <LocaleProvider>
+            <BreakpointProvider>
+              <SidebarProvider>
+                <RouterProvider router={router} />
+              </SidebarProvider>
+            </BreakpointProvider>
+          </LocaleProvider>
+        </ThemeProvider>
+      </AuthProvider>
+    </QueryProvider>
   );
 }
 
