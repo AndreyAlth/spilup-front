@@ -9,3 +9,5 @@ interface User {
 }
 
 type UpdateUser = Pick<User, "name" | "last_name" | "email">;
+
+type CreateUser = Pick<User | "name" | "last_name" | "email" | "password">

@@ -1,9 +1,9 @@
 // Import Dependencies
-import { EnvelopeIcon, LockClosedIcon } from "@heroicons/react/24/outline";
+import { EnvelopeIcon, LockClosedIcon, UserIcon } from "@heroicons/react/24/outline";
 import { Link } from "react-router";
 
 // Local Imports
-import { Button, Card, Input } from "components/ui";
+import { Button, Card, Checkbox, Input } from "components/ui";
 import Logo from "assets/appLogo.svg?react";
 
 // ----------------------------------------------------------------------
@@ -27,7 +27,25 @@ export default function SignUpV1() {
           <form>
             <div className="space-y-4">
               <Input
-                placeholder="Username"
+                placeholder="Name"
+                prefix={
+                  <UserIcon
+                    className="size-5 transition-colors duration-200"
+                    strokeWidth="1"
+                  />
+                }
+              />
+              <Input
+                placeholder="Last Name"
+                prefix={
+                  <UserIcon
+                    className="size-5 transition-colors duration-200"
+                    strokeWidth="1"
+                  />
+                }
+              />
+              <Input
+                placeholder="Email"
                 prefix={
                   <EnvelopeIcon
                     className="size-5 transition-colors duration-200"
