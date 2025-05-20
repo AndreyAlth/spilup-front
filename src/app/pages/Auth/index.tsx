@@ -106,7 +106,7 @@ export default function SignIn() {
                 <span>Dont have Account?</span>{" "}
                 <Link
                   className="text-primary-600 transition-colors hover:text-primary-800 dark:text-primary-400 dark:hover:text-primary-600"
-                  to="/pages/sign-up-v1"
+                  to="/sign-up"
                 >
                   Create account
                 </Link>
