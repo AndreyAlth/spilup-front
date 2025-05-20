@@ -32,8 +32,8 @@ export function InvoiceName({ getValue, column }) {
 }
 
 export function Date({ getValue }) {
-  const { locale } = useLocaleContext();
-  const date = dayjs(+getValue()).locale(locale).format("DD MMM YYYY");
+  const { locale } = useLocaleContext() || { locale: "es" }; // Ensure locale is defined
+  const date = dayjs(getValue()).locale(locale).format("DD MMM YYYY");
   return <span>{date}</span>;
 }
 

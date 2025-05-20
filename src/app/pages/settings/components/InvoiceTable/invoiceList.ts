@@ -1,15 +1,11 @@
 export const invoiceStatus = [
     {
-        value: 'unfunded',
-        label: 'Unfunded'
+        value: 'BURNED',
+        label: 'Burned'
     },
     {
-        value: 'pending',
-        label: 'Pending'
-    },
-    {
-        value: 'paid',
-        label: 'Paid'
+        value: 'GENERATED',
+        label: 'Generated'
     }
 ]
 

@@ -115,11 +115,11 @@ export function Toolbar({ table }) {
 function Filters({ table }) {
   return (
     <>
-      {table.getColumn("status") && (
+      {table.getColumn("type") && (
         <FacedtedFilter
           options={invoiceStatus}
-          column={table.getColumn("status")}
-          title="Status"
+          column={table.getColumn("type")}
+          title="Tipo"
           Icon={CheckCircleIcon}
         />
       )}
