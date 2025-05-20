@@ -66,6 +66,13 @@ const protectedRoutes = {
                 ).default,
               }),
             },
+            {
+              path: "billing",
+              lazy: async () => ({
+                Component: (await import("app/pages/settings/sections/Billing"))
+                  .default,
+              }),
+            },
           ],
         },
       ],

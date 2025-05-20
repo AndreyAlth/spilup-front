@@ -72,6 +72,7 @@
   },
   "devDependencies": {
     "@tailwindcss/postcss": "^4.0.16",
+    "@types/cleave.js": "^1.4.12",
     "@types/lodash": "^4.17.16",
     "@types/node": "^22.15.17",
     "@types/prop-types": "^15.7.14",
