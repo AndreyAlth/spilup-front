@@ -3,7 +3,7 @@ import { EnvelopeIcon, LockClosedIcon } from "@heroicons/react/24/outline";
 import { Link } from "react-router";
 
 // Local Imports
-import { Button, Card, Checkbox, Input } from "components/ui";
+import { Button, Card, Input } from "components/ui";
 import Logo from "assets/appLogo.svg?react";
 
 // ----------------------------------------------------------------------
@@ -56,7 +56,7 @@ export default function SignUpV1() {
                 }
               />
 
-              <div className="flex gap-1">
+              {/* <div className="flex gap-1">
                 <Checkbox label="I agree with" />
                 <a
                   href="##"
@@ -64,7 +64,7 @@ export default function SignUpV1() {
                 >
                   privacy policy
                 </a>
-              </div>
+              </div> */}
             </div>
 
             <Button className="mt-5 w-full" color="primary">
@@ -76,13 +76,13 @@ export default function SignUpV1() {
               <span>Already have an account? </span>{" "}
               <Link
                 className="text-primary-600 transition-colors hover:text-primary-800 dark:text-primary-400 dark:hover:text-primary-600"
-                to="/pages/sign-in-v1"
+                to="/login"
               >
                 Sign In
               </Link>
             </p>
           </div>
-          <div className="my-7 flex items-center space-x-3 text-xs ">
+          {/* <div className="my-7 flex items-center space-x-3 text-xs ">
             <div className="h-px flex-1 bg-gray-200 dark:bg-dark-500"></div>
             <p>OR SIGN UP WITH EMAIL</p>
             <div className="h-px flex-1 bg-gray-200 dark:bg-dark-500"></div>
@@ -104,7 +104,7 @@ export default function SignUpV1() {
               />
               <span>Github</span>
             </Button>
-          </div>
+          </div> */}
         </Card>
         <div className="mt-8 flex justify-center text-xs text-gray-400 dark:text-dark-300">
           <a href="##">Privacy Notice</a>
