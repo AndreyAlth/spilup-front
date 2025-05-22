@@ -1,8 +1,8 @@
 import * as Yup from 'yup'
 
 export const createUserSchema = Yup.object().shape({
-    firstName: Yup.string().trim().required('First name is required'),
-    lastName: Yup.string().trim().required('Last name is required'),
+    name: Yup.string().trim().required('First name is required'),
+    last_name: Yup.string().trim().required('Last name is required'),
     email: Yup.string().trim().email('Invalid email format').required('Email is required'),
     password: Yup.string().trim()
         .min(8, 'Password must be at least 8 characters')

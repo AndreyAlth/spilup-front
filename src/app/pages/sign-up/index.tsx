@@ -12,10 +12,14 @@ import Logo from "assets/appLogo.svg?react";
 import { useForm } from "react-hook-form";
 import { yupResolver } from "@hookform/resolvers/yup";
 import { createUserSchema } from './schema'
+import { createUser } from "api/users";
+import { useCreateUser } from "api/user";
 
 // ----------------------------------------------------------------------
 
-export default function SignUpV1() {
+export default function SignUp() {
+  const { mutate: createUserMutation,  isPending } = useCreateUser();
+
   const {
     register,
     handleSubmit,
@@ -25,8 +29,7 @@ export default function SignUpV1() {
   });
 
   const onSubmit = (data) => {
-    console.log(data);
-    console.log('dssdm')
+    createUserMutation(data);
   };
   return (
     <main className="min-h-100vh grid w-full grow grid-cols-1 place-items-center">
@@ -54,8 +57,8 @@ export default function SignUpV1() {
                     strokeWidth="1"
                   />
                 }
-                {...register("firstName")}
-                error={errors.firstName?.message}
+                {...register("name")}
+                error={errors.name?.message}
               />
               <Input
                 label="Last Name"
@@ -66,8 +69,8 @@ export default function SignUpV1() {
                   strokeWidth="1"
                   />
                 }
-                {...register("lastName")}
-                error={errors.lastName?.message}
+                {...register("last_name")}
+                error={errors.last_name?.message}
               />
               <Input
                 label="Email"
@@ -119,7 +122,7 @@ export default function SignUpV1() {
               </div> */}
             </div>
 
-            <Button className="mt-5 w-full" color="primary" type="submit">
+            <Button className="mt-5 w-full" color="primary" type="submit" didable={isPending}>
               Sign Up
             </Button>
           </form>

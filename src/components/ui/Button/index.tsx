@@ -6,6 +6,7 @@ import clsx from 'clsx'
 // Local Imports
 import { COLORS } from "constants/app.constant";
 import { setThisClass } from "utils/setThisClass";
+import { Spinner } from "components/ui";
 
 // ----------------------------------------------------------------------
 
@@ -40,6 +41,7 @@ const Button = forwardRef((props, ref) => {
     isGlow,
     disabled,
     onClick,
+    isLoading = false,
     ...rest
   } = props;
 
@@ -77,7 +79,7 @@ const Button = forwardRef((props, ref) => {
       onClick={onClick}
       {...rest}
     >
-      {children}
+      {isLoading ? <Spinner /> : children }
     </Component>
   );
 });
