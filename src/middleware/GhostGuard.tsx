@@ -18,7 +18,7 @@ export default function GhostGuard() {
 
   if (isAuthenticated) {
     if (url && url !== "") {
-      return <Navigate to={url} />;
+      return <Navigate to={"/dashboards/home"} />;
     }
     return <Navigate to={HOME_PATH} />;
   }

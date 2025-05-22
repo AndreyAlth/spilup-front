@@ -7,29 +7,28 @@ import {
 import { Link } from "react-router";
 
 // Local Imports
-import { Button, Card, Checkbox, Input } from "components/ui";
+import { Button, Card, Checkbox, Input, InputErrorMsg } from "components/ui";
 import Logo from "assets/appLogo.svg?react";
 import { useForm } from "react-hook-form";
 import { yupResolver } from "@hookform/resolvers/yup";
-import { createUserSchema } from './schema'
-import { createUser } from "api/users";
-import { useCreateUser } from "api/user";
+import { createUserSchema } from "./schema";
+import { useAuthContext } from "app/contexts/auth/context";
 
 // ----------------------------------------------------------------------
 
 export default function SignUp() {
-  const { mutate: createUserMutation,  isPending } = useCreateUser();
+  const { signup, errorMessage } = useAuthContext();
 
   const {
     register,
     handleSubmit,
     formState: { errors },
   } = useForm({
-    resolver: yupResolver(createUserSchema)
+    resolver: yupResolver(createUserSchema),
   });
 
   const onSubmit = (data) => {
-    createUserMutation(data);
+    signup(data);
   };
   return (
     <main className="min-h-100vh grid w-full grow grid-cols-1 place-items-center">
@@ -65,8 +64,8 @@ export default function SignUp() {
                 placeholder="Enter Last Name"
                 prefix={
                   <UserIcon
-                  className="size-5 transition-colors duration-200"
-                  strokeWidth="1"
+                    className="size-5 transition-colors duration-200"
+                    strokeWidth="1"
                   />
                 }
                 {...register("last_name")}
@@ -77,8 +76,8 @@ export default function SignUp() {
                 placeholder="Enter Email"
                 prefix={
                   <EnvelopeIcon
-                  className="size-5 transition-colors duration-200"
-                  strokeWidth="1"
+                    className="size-5 transition-colors duration-200"
+                    strokeWidth="1"
                   />
                 }
                 {...register("email")}
@@ -90,8 +89,8 @@ export default function SignUp() {
                 type="password"
                 prefix={
                   <LockClosedIcon
-                  className="size-5 transition-colors duration-200"
-                  strokeWidth="1"
+                    className="size-5 transition-colors duration-200"
+                    strokeWidth="1"
                   />
                 }
                 {...register("password")}
@@ -103,13 +102,21 @@ export default function SignUp() {
                 type="password"
                 prefix={
                   <LockClosedIcon
-                  className="size-5 transition-colors duration-200"
-                  strokeWidth="1"
+                    className="size-5 transition-colors duration-200"
+                    strokeWidth="1"
                   />
                 }
                 {...register("confirmPassword")}
                 error={errors.confirmPassword?.message}
               />
+
+              <div className="mt-2">
+                <InputErrorMsg
+                  when={errorMessage && errorMessage?.message !== ""}
+                >
+                  {errorMessage?.message}
+                </InputErrorMsg>
+              </div>
 
               {/* <div className="flex gap-1">
                 <Checkbox label="I agree with" />
@@ -122,7 +129,11 @@ export default function SignUp() {
               </div> */}
             </div>
 
-            <Button className="mt-5 w-full" color="primary" type="submit" didable={isPending}>
+            <Button
+              className="mt-5 w-full"
+              color="primary"
+              type="submit"
+            >
               Sign Up
             </Button>
           </form>

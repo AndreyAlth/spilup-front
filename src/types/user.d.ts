@@ -11,3 +11,7 @@ interface User {
 type UpdateUser = Pick<User, "name" | "last_name" | "email">;
 
 type CreateUser = Pick<User | "name" | "last_name" | "email" | "password">
+
+type SignUp = Pick<User, "name"  | "last_name" | "email" | "password"> & {
+  confirmPassword: string;
+};

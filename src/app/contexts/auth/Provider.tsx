@@ -62,6 +62,33 @@ const reducerHandlers = {
     isAuthenticated: false,
     user: null,
   }),
+
+  SIGN_UP_REQUEST: (state) => {
+    return {
+      ...state,
+      isLoading: true,
+    };
+  },
+
+  SIGN_UP_SUCCESS: (state, action) => {
+    const { user } = action.payload;
+    return {
+      ...state,
+      isAuthenticated: true,
+      isLoading: false,
+      user,
+    };
+  },
+
+  SIGN_UP_ERROR: (state, action) => {
+    const { errorMessage } = action.payload;
+
+    return {
+      ...state,
+      errorMessage,
+      isLoading: false,
+    };
+  },
 };
 
 const reducer = (state, action) => {
@@ -159,6 +186,43 @@ export function AuthProvider({ children }) {
     dispatch({ type: "LOGOUT" });
   };
 
+  const signup = async ({name, last_name, email, password }: SignUp) => {
+    dispatch({
+      type: "LOGIN_REQUEST",
+    })
+
+    try {
+      const response = await axios.post("/auth/sign-up", {
+        name,
+        last_name,
+        email,
+        password,
+      });
+
+      const { token, user } = response.data;
+
+      if (!isString(token) && !isObject(user)) {
+        throw new Error("Response is not vallid");
+      }
+
+      setSession(token);
+
+      dispatch({
+        type: "LOGIN_SUCCESS",
+        payload: {
+          user,
+        },
+      });
+    } catch (err) {
+      dispatch({
+        type: "LOGIN_ERROR",
+        payload: {
+          errorMessage: err,
+        },
+      });
+    }
+  }
+
   if (!children) {
     return null;
   }
@@ -169,6 +233,7 @@ export function AuthProvider({ children }) {
         ...state,
         login,
         logout,
+        signup,
       }}
     >
       {children}
